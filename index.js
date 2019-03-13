@@ -13,6 +13,8 @@ console.log('Mail Server', config.get('mail.host'));
 console.log('Mail Password', config.get('mail.password'));
 //console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 //console.log(`app: $app.get('env')`);
+app.set('view engine', 'pug');
+app.set('views', './views');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static('public')); //css, images
@@ -24,6 +26,7 @@ if(app.get('env') === 'development'){
 
 app.use(log);
 
+dbDebugger("database connected...");
 
 
 const courses = [
@@ -33,7 +36,7 @@ const courses = [
 ];
 
 app.get('/', (req, res)=>{
-  res.send('Hello World');
+  res.render('index', {title: "My Express App", message: "Hello"})
 });
 
 app.get('/api/courses', (req, res)=>{
